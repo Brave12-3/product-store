@@ -1,6 +1,16 @@
 import express from "express"
+import cors from"cors";
+import {ENV} from "./config/env";
+import {clerkMiddleware } from "@clerk/express";
 const app = express();
+
+app.use(cors)
+app.use(clerkMiddleware());
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
 app.get("/", (req, res) =>{
+    
     res.json({
          message: "Welcome to product store API - Powered by postgreSQL,Drizzle ORM & clerk Auth",
         endpoints: {
@@ -12,4 +22,4 @@ app.get("/", (req, res) =>{
 
 });
 
-app.listen(3000, ()=> console.log("Server is up and running on port:3000"));
+app.listen(ENV.PORT, ()=> console.log("Server is up and running on port:ENV.PORT"));
