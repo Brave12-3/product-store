@@ -27,6 +27,7 @@ app.get("/api/health", (req, res) => {
     },
   });
 });
+app.use(cors({ origin: ENV.FRONTEND_URL, credentials: true }));
 
 app.use("/api/users", userRoutes);
 app.use("/api/products", productRoutes);
