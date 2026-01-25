@@ -3,6 +3,18 @@ import * as queries from "../db/queries";
 
 import { getAuth } from "@clerk/express";
 
+/**
+ * Synchronizes the authenticated user's profile by upserting `email`, `name`, and `imageUrl` from the request body into the database.
+ *
+ * Responds with:
+ * - 200: the upserted user object
+ * - 400: when `email`, `name`, or `imageUrl` are missing from the request body
+ * - 401: when the request is unauthenticated
+ * - 500: on internal server error
+ *
+ * @param req - Express request whose body must include `email`, `name`, and `imageUrl`; authentication is derived from the request
+ * @param res - Express response used to send HTTP status and JSON payloads
+ */
 export async function syncUser(req: Request, res: Response) {
   try {
     const { userId } = getAuth(req);
